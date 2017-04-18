@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<select id="selProvince">
+		<option>--请选择--</option>
+	</select>
+
+	<select id="selCity">
+		<option>--请选择--</option>
+	</select>
+
+	<select id="selCountry">
+		<option>--请选择--</option>
+	</select>
+
+
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">
+		
+	var aProvince=['河北省','山西省','湖北省'];
+	var acity=[
+				['石家庄','张家口','承德','秦皇岛'],
+				['太原','宿州','大同','阳泉'],
+				['武汉','孝感','宜昌']
+			];
+	var aCountry=[
+					[
+						['无极00','赵县00','滦县00'],
+						['沽源01','商议01','阳原01'],
+						['武汉02','孝感02','宜昌02'],
+						['武汉03','孝感03','宜昌03']
+					],
+					[
+						['无极10','赵县10','滦县10'],
+						['沽源11','商议11','阳原11'],
+						['武汉12','孝感12','宜昌12'],
+						['武汉13','孝感13','宜昌13']
+					],
+					[
+						['无极20','赵县20','滦县20'],
+						['沽源21','商议21','阳原21'],
+						['武汉23','孝感23','宜昌23']
+					]
+				]
+
+	var iNum1;//定义省的下标
+	var iNum2;//定义市的下标
+
+	$(function(){
+		//先把省添加进去
+		for(var i=0;i<aProvince.length;i++){
+			$('#selProvince').append('<option>'+aProvince[i]+'</option>');
+		};
+
+		//当省的select发生变化时
+		$('#selProvince').change(function(){
+			//先清空下面opction，不然会叠加
+			$('#selCity').children().not(':eq(0)').remove();
+			$('#selCountry').children().not(':eq(0)').remove();
+
+			//获取选中省的下标
+			iNum1=$(this).children('option:selected').index();
+			var aaCity=acity[iNum1-1];//默认布局中有一个请选择的opction
+
+			//根据下标添加对应的市
+			for(var j=0;j<aaCity.length;j++){
+				$('#selCity').append('<option>'+aaCity[j]+'</option>');
+			}
+		});
+
+		//当市的select发生变化时
+		$('#selCity').change(function(){
+			$('#selCountry').children().not(':eq(0)').remove();
+
+			iNum2=$(this).children('option:selected').index();
+			var aaCountry=aCountry[iNum1-1][iNum2-1];
+
+			for(var j=0;j<aaCountry.length;j++){
+				$('#selCountry').append('<option>'+aaCountry[j]+'</option>');
+			}
+		})
+	})
+
+	</script>
+</body>
+</html>
